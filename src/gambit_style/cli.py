@@ -33,7 +33,7 @@ def format(file_or_dir):
 @click.argument('file_or_dir', required=True, nargs=-1)
 def lint(file_or_dir):
     """
-    Lint (i.e. detect potential bugs and style issues and show suggestions) YAML, CXX or Python files in FILE_OR_DIR
+    Suggest linting for YAML, CXX or Python files in FILE_OR_DIR
     """
     for f in files(file_or_dir):
         if is_python_file(f):
