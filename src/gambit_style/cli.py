@@ -16,7 +16,7 @@ def cli():
 
 
 @cli.command()
-@click.argument('file_or_dir', required=True)
+@click.argument('file_or_dir', required=True, nargs=-1)
 def format(file_or_dir):
     """
     Format in place CXX or Python files in FILE_OR_DIR
@@ -30,7 +30,7 @@ def format(file_or_dir):
 
 
 @cli.command()
-@click.argument('file_or_dir', required=True)
+@click.argument('file_or_dir', required=True, nargs=-1)
 def lint(file_or_dir):
     """
     Lint (i.e. detect potential bugs and style issues and show suggestions) YAML, CXX or Python files in FILE_OR_DIR
