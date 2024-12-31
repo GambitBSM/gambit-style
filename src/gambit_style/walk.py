@@ -53,12 +53,10 @@ def walk(dir_):
 def files(file_or_dir):
     if isinstance(file_or_dir, (list, tuple)):
         for f in file_or_dir:
-            for l in files(f):
-                yield l
+            yield from files(f)
     elif os.path.isfile(file_or_dir) and not ignore_file(file_or_dir):
         yield file_or_dir
     elif os.path.isdir(file_or_dir) and not ignore_dir(file_or_dir):
-        for f in walk(file_or_dir):
-            yield f
+        yield from walk(file_or_dir)
     else:
         raise RuntimeError(f"Could not understand {file_or_dir}")
