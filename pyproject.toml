@@ -16,6 +16,7 @@ dependencies = [
     "click",
     "autopep8",
     "clang-format",
+    "clang-tidy",
     "cpplint",
     "pylint",
     "yamllint"

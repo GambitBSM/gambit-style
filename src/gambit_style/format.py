@@ -3,47 +3,68 @@ Format Python or C/C++ file
 ===========================
 """
 
+import os
 import subprocess
 
 import clang_format
+import clang_tidy
 import autopep8
 import cpplint
 from pylint.lint import Run as PyLintRun
 
 
-def format_cxx_file(path_to_file):
+class TidyCXX:
+    def __init__(self, path):
+        """
+        @param path Path to project
+        """
+        self.path = path
+        env = os.environ.copy()
+        env["CXX"] = "clang++"
+        self.build_dir = os.path.join(self.path, "tidy_build")
+        subprocess.call(["cmake", f"-B{self.build_dir}", f"-S{path}",
+                        "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON"], env=env)
+
+    def tidy_cxx_file(self, file_name):
+        """
+        @param file_name Python file to be formatted
+        """
+        return subprocess.call([clang_tidy._get_executable("clang-tidy"), "-p", self.build_dir, "-fix", file_name])
+
+
+def format_cxx_file(file_name):
     """
-    @param path_to_file Absolute file path
+    @param file_name CXX file to be formatted
     """
     subprocess.call([clang_format._get_executable(
-        "clang-format"), "-i", path_to_file])
+        "clang-format"), "-i", file_name])
 
 
-def format_python_file(path_to_file):
+def format_python_file(file_name):
     """
-    @param path_to_file Absolute file path
+    @param file_name Python file to be formatted
     """
-    options = autopep8.parse_args([path_to_file])
+    options = autopep8.parse_args([file_name])
     options.in_place = True
-    autopep8.fix_file(path_to_file, options)
+    autopep8.fix_file(file_name, options)
 
 
-def lint_cxx_file(path_to_file):
+def lint_cxx_file(file_name):
     """
-    @param path_to_file Absolute file path
+    @param file_name CXX file to be linted
     """
-    cpplint.ProcessFile(path_to_file, 1)
+    cpplint.ProcessFile(file_name, 1)
 
 
-def lint_python_file(path_to_file):
+def lint_python_file(file_name):
     """
-    @param path_to_file Absolute file path
+    @param file_name Python file to be linted
     """
-    PyLintRun([path_to_file], exit=False)
+    PyLintRun([file_name], exit=False)
 
 
-def lint_yaml_file(path_to_file):
+def lint_yaml_file(file_name):
     """
-    @param path_to_file Absolute file path
+    @param file_name YAML file to be linted
     """
-    subprocess.call(["yamllint", path_to_file])
+    subprocess.call(["yamllint", file_name])
