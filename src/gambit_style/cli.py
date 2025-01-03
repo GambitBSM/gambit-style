@@ -55,6 +55,7 @@ def tidy(gambit_dir, file_or_dir):
     for f in files(file_or_dir):
         if is_cxx_file(f):
             tidy_cxx.tidy_cxx_file(f)
+            tidy_cxx.iwyu_cxx_file(f)
 
 
 if __name__ == '__main__':

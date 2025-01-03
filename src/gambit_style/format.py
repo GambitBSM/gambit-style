@@ -12,24 +12,32 @@ import autopep8
 import cpplint
 from pylint.lint import Run as PyLintRun
 
+from .contrib import iwyu_tool
+
 
 class TidyCXX:
     def __init__(self, path):
         """
         @param path Path to project
         """
-        self.path = path
         env = os.environ.copy()
         env["CXX"] = "clang++"
-        self.build_dir = os.path.join(self.path, "tidy_build")
+        self.build_dir = os.path.join(path, "tidy_build")
         subprocess.call(["cmake", f"-B{self.build_dir}", f"-S{path}",
                         "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON"], env=env)
 
     def tidy_cxx_file(self, file_name):
         """
-        @param file_name Python file to be formatted
+        @param file_name Python file to be checked
         """
         return subprocess.call([clang_tidy._get_executable("clang-tidy"), "-p", self.build_dir, "-fix", file_name])
+
+    def iwyu_cxx_file(self, file_name):
+        """
+        @param file_name Python file to be checked
+        """
+        iwyu_tool.main(self.build_dir, [file_name],
+                       True, lambda output: output, 1, 0, [])
 
 
 def format_cxx_file(file_name):
