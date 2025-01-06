@@ -5,6 +5,7 @@ Format Python or C/C++ file
 
 import os
 import subprocess
+import warnings
 
 import clang_format
 import clang_tidy
@@ -30,14 +31,18 @@ class TidyCXX:
         """
         @param file_name Python file to be checked
         """
-        return subprocess.call([clang_tidy._get_executable("clang-tidy"), "-p", self.build_dir, "-fix", file_name])
+        subprocess.call([clang_tidy._get_executable(
+            "clang-tidy"), "-p", self.build_dir, "-fix", file_name])
 
     def iwyu_cxx_file(self, file_name):
         """
         @param file_name Python file to be checked
         """
-        iwyu_tool.main(self.build_dir, [file_name],
-                       True, lambda output: output, 1, 0, [])
+        if iwyu_tool.find_include_what_you_use():
+            iwyu_tool.main(self.build_dir, [file_name],
+                           True, lambda output: output, 1, 0, [])
+        else:
+            warnings.warn("did not find iwyu")
 
 
 def format_cxx_file(file_name):
