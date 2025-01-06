@@ -66,7 +66,8 @@ def lint_cxx_file(file_name):
     """
     @param file_name CXX file to be linted
     """
-    cpplint.ProcessFile(file_name, 1)
+    cpplint._SetFilters("-whitespace,-legal")
+    cpplint.ProcessFile(file_name, 0)
 
 
 def lint_python_file(file_name):
