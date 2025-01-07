@@ -6,8 +6,9 @@
 
 ## Use
 ```bash
-gambit-style format GAMBIT_DIRECTORY  # to format in place 
-gambit-style lint GAMBIT_DIRECTORY  # to provide lint suggestions
+gambit-style format GAMBIT_FILES_OR_DIRECTORY  # to format in place 
+gambit-style lint GAMBIT_FILES_OR_DIRECTORY  # to provide lint suggestions
+gambit-style tidy GAMBIT_DIRECTORY GAMBIT_FILES_OR_DIRECTORY  # to tidy code using cmake informatio
 ```
 
 You can also run these commands on folders, files or lists of files, e.g.,
@@ -19,9 +20,14 @@ gambit-style format this_file.cpp and_that_file.py  # a list of files and folder
 
 Formatting should apply gambit formatting rules to all appropriate files:
 
-- Format C/CXX files by `clang-format
+- Format C/CXX files by `clang-format`
 - PEP8 format Python files by `autopep8`
 - Fix file permissions
+
+Tidying, on the other hand, should:
+
+- Analyse files using `clang-tidy` and apply suggestions in place
+- Analyse files using `include-what-you-use` but not apply suggestions (as it is quite opinionated)
 
 Linting should provide yamllint, pylint and cpplint suggestions (though note that the cpplint suggestions follow google style guidelines):
 
