@@ -29,7 +29,13 @@ Tidying, on the other hand, should:
 - Analyse files using `clang-tidy` and apply suggestions in place
 - Analyse files using `include-what-you-use` but not apply suggestions (as it is quite opinionated)
 
-Linting should provide yamllint, pylint and cpplint suggestions (though note that the cpplint suggestions follow google style guidelines):
+Linting should provide 
+
+- yamllint
+- pylint
+- cpplint
+
+suggestions (though note that the cpplint suggestions follow google style guidelines and some filters are disabled).
 
 ## Ignored files
 
