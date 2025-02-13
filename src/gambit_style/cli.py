@@ -59,10 +59,10 @@ def tidy(gambit_dir, file_or_dir):
 
 
 @cli.command()
-@click.argument('gambit_dir', required=True)
-def ci(gambit_dir):
+@click.argument('file_or_dir', required=True, nargs=-1)
+def ci(file_or_dir):
     """
-    Tidy FILE_OR_DIR in gambit project in GAMBIT_DIR
+    CI compliance check on FILE_OR_DIR
     """
     for f in files(gambit_dir):
         if is_cxx_file(f):
