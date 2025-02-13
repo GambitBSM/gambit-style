@@ -8,7 +8,8 @@
 ```bash
 gambit-style format GAMBIT_FILES_OR_DIRECTORY  # to format in place 
 gambit-style lint GAMBIT_FILES_OR_DIRECTORY  # to provide lint suggestions
-gambit-style tidy GAMBIT_DIRECTORY GAMBIT_FILES_OR_DIRECTORY  # to tidy code using cmake informatio
+gambit-style tidy GAMBIT_DIRECTORY GAMBIT_FILES_OR_DIRECTORY  # to tidy code using cmake information
+gambit-style ci GAMBIT_FILES_OR_DIRECTORY  # CI check on compliance
 ```
 
 You can also run these commands on folders, files or lists of files, e.g.,
@@ -36,6 +37,11 @@ Linting should provide
 - cpplint
 
 suggestions (though note that the cpplint suggestions follow google style guidelines and some filters are disabled).
+
+Finally, the CI checks use
+
+- clang-format
+- flake8
 
 ## Ignored files
 

@@ -53,6 +53,14 @@ def format_cxx_file(file_name):
         "clang-format"), "-i", file_name])
 
 
+def ci_cxx_file(file_name):
+    """
+    @param file_name CXX file to be formatted
+    """
+    subprocess.call([clang_format._get_executable(
+        "clang-format"), "--Werror", "--dry-run", file_name])
+
+
 def format_python_file(file_name):
     """
     @param file_name Python file to be formatted
@@ -60,6 +68,15 @@ def format_python_file(file_name):
     options = autopep8.parse_args([file_name])
     options.in_place = True
     autopep8.fix_file(file_name, options)
+
+
+def ci_python_file(file_name):
+    """
+    @param file_name Python file to be formatted
+    """
+    style_guide = flake8.get_style_guide()
+    report = style_guide.check_files(file_name)
+    assert report.get_statistics('E') == [], 'Flake8 found violations'
 
 
 def lint_cxx_file(file_name):

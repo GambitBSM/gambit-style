@@ -5,7 +5,7 @@ CLI to linter and formatter
 
 import click
 
-from .format import format_cxx_file, format_python_file, lint_cxx_file, lint_python_file, lint_yaml_file, TidyCXX
+from .format import format_cxx_file, format_python_file, lint_cxx_file, lint_python_file, lint_yaml_file, TidyCXX, ci_cxx_file
 from .permission import fix_permission
 from .walk import files, is_yaml_file, is_cxx_file, is_python_file
 
@@ -56,6 +56,19 @@ def tidy(gambit_dir, file_or_dir):
         if is_cxx_file(f):
             tidy_cxx.tidy_cxx_file(f)
             tidy_cxx.iwyu_cxx_file(f)
+
+
+@cli.command()
+@click.argument('gambit_dir', required=True)
+def ci(gambit_dir):
+    """
+    Tidy FILE_OR_DIR in gambit project in GAMBIT_DIR
+    """
+    for f in files(gambit_dir):
+        if is_cxx_file(f):
+            ci_cxx_file(f)
+        if is_python_file(f):
+            ci_python_file(f)
 
 
 if __name__ == '__main__':

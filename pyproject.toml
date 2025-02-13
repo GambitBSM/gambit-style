@@ -19,7 +19,8 @@ dependencies = [
     "clang-tidy",
     "cpplint",
     "pylint",
-    "yamllint"
+    "yamllint",
+    "flake8"
 ]
 
 [project.scripts]
