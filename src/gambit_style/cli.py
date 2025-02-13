@@ -64,7 +64,7 @@ def ci(file_or_dir):
     """
     CI compliance check on FILE_OR_DIR
     """
-    for f in files(gambit_dir):
+    for f in files(file_or_dir):
         if is_cxx_file(f):
             ci_cxx_file(f)
         if is_python_file(f):
