@@ -5,7 +5,7 @@ CLI to linter and formatter
 
 import click
 
-from .format import format_cxx_file, format_python_file, lint_cxx_file, lint_python_file, lint_yaml_file, TidyCXX, ci_cxx_file
+from .format import format_cxx_file, format_python_file, lint_cxx_file, lint_python_file, lint_yaml_file, TidyCXX, ci_cxx_file, ci_python_file
 from .permission import fix_permission
 from .walk import files, is_yaml_file, is_cxx_file, is_python_file
 

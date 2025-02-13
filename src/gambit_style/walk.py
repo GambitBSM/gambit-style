@@ -4,6 +4,7 @@ Walk GAMBIT directory
 """
 
 import os
+import warnings
 
 import autopep8
 
@@ -54,9 +55,11 @@ def files(file_or_dir):
     if isinstance(file_or_dir, (list, tuple)):
         for f in file_or_dir:
             yield from files(f)
-    elif os.path.isfile(file_or_dir) and not ignore_file(file_or_dir):
+    elif ignore_file(file_or_dir):
+        warnings.warn(f"Ignored {file_or_dir}")
+    elif os.path.isfile(file_or_dir):
         yield file_or_dir
-    elif os.path.isdir(file_or_dir) and not ignore_dir(file_or_dir):
+    elif os.path.isdir(file_or_dir):
         yield from walk(file_or_dir)
     else:
-        raise RuntimeError(f"Could not understand {file_or_dir}")
+        raise RuntimeError(f"Could not open {file_or_dir}")
