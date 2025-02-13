@@ -64,11 +64,15 @@ def ci(file_or_dir):
     """
     CI compliance check on FILE_OR_DIR
     """
+    rcode = 0
+
     for f in files(file_or_dir):
         if is_cxx_file(f):
-            ci_cxx_file(f)
+            rcode |= ci_cxx_file(f)
         if is_python_file(f):
-            ci_python_file(f)
+            rcode |= ci_python_file(f)
+
+    exit(rcode)
 
 
 if __name__ == '__main__':

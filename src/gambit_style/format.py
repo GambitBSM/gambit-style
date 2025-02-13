@@ -11,7 +11,6 @@ import clang_format
 import clang_tidy
 import autopep8
 import cpplint
-from flake8.api import legacy as flake8
 from pylint.lint import Run as PyLintRun
 
 from .contrib import iwyu_tool
@@ -59,9 +58,8 @@ def ci_cxx_file(file_name):
     @param file_name CXX file to be checked
     """
     res = subprocess.run([clang_format._get_executable(
-        "clang-format"), "--Werror", "--dry-run", file_name], capture_output=True)
-    if res.returncode != 0:
-        raise RuntimeError(res.stdout)
+        "clang-format"), "--Werror", "--dry-run", file_name])
+    return res.returncode
 
 
 def format_python_file(file_name):
@@ -77,9 +75,9 @@ def ci_python_file(file_name):
     """
     @param file_name Python file to be checked
     """
-    res = subprocess.run(["flake8", file_name], capture_output=True)
-    if res.returncode != 0:
-        raise RuntimeError(res.stdout)
+    res = subprocess.run(["flake8", file_name])
+    return res.returncode
+
 
 def lint_cxx_file(file_name):
     """
