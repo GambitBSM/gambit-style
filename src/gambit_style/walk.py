@@ -28,17 +28,17 @@ def is_yaml_file(path_to_file):
     return file_extension in YAML_FILE_EXTENSIONS
 
 
-def dotfile(file_or_dir):
+def is_dotfile(file_or_dir):
     abs_ = os.path.abspath(file_or_dir)
     return any(n.startswith(".") for n in abs_.split(os.sep))
 
 
 def ignore_dir(path):
-    return path in IGNORE_DIR or dotfile(path)
+    return path in IGNORE_DIR or is_dotfile(path)
 
 
 def ignore_file(path_to_file):
-    return path_to_file in IGNORE_FILE or dotfile(path_to_file)
+    return path_to_file in IGNORE_FILE or is_dotfile(path_to_file)
 
 
 def walk(dir_):
